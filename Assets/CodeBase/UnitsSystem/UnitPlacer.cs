@@ -1,4 +1,5 @@
 using CodeBase.Services;
+using CodeBase.StaticData;
 using CodeBase.UI;
 using CodeBase.UnitsSystem.StaticData;
 using CodeBase.UnitsSystem.StaticData.Factory;
@@ -12,17 +13,15 @@ namespace CodeBase.UnitsSystem
     {
         private IUnitFactory _unitFactory;
         private UnitViews _unitView;
-        private Collider[] _validColliders;
         private WorldUnit _selectedWorldUnit;
         private Camera _mainCamera;
         private IInputService _inputService;
-
+       
         private const float Distance = 100;
-        private const int GroundLayer = 1 << 6;
         private const int BuildingLayer = 1 << 7;
-        
+
         [Inject]
-        public void Construct(IInputService inputService, UnitViews unitViews, IUnitFactory unitFactory)
+        public void Construct(IInputService inputService, UnitViews unitViews, IUnitFactory unitFactory, IPlayerStats playerStats)
         {
             _unitView = unitViews;
             _inputService = inputService;
@@ -31,37 +30,21 @@ namespace CodeBase.UnitsSystem
 
         private void Awake()
         {
-            _validColliders = new Collider[2];
             _mainCamera = Camera.main;
         }
 
         private void OnEnable()
         {
-            _unitView.OnUnitSelect += SelectUnit;
+            _unitView.OnUnitSelect += CreateAndSelectUnit;
             _inputService.OnUnitSelect += SelectWorldUnit;
-            _inputService.OnCancel += ResetSelectedUnit;
+            _inputService.OnCancel += DestroyAndResetSelectedUnit;
         }
 
         private void OnDisable()
         {
-            _unitView.OnUnitSelect -= SelectUnit;
+            _unitView.OnUnitSelect -= CreateAndSelectUnit;
             _inputService.OnUnitSelect -= SelectWorldUnit;
-            _inputService.OnCancel -= ResetSelectedUnit;
-        }
-
-        private void Update()
-        {
-            if(_selectedWorldUnit == null) 
-                return;
-
-            if (HitGround(out var hit))
-            {
-                if (_inputService.UnitRotate(out var delta))
-                    _selectedWorldUnit.Rotate(delta);
-                else
-                    _selectedWorldUnit.SetPosition(hit.point);
-                _selectedWorldUnit.SetValid(IsValidPlace());
-            }
+            _inputService.OnCancel -= DestroyAndResetSelectedUnit;
         }
 
         private void SelectWorldUnit()
@@ -70,18 +53,40 @@ namespace CodeBase.UnitsSystem
             {
                 _selectedWorldUnit = unit;
                 _selectedWorldUnit.Select();
-                return;
-            }
-            
-            if(_selectedWorldUnit == null) 
-                return;
-            
-            if (HitGround(out var hit) && IsValidPlace())
-            {
-                PlaceUnit(hit.point);
-                _selectedWorldUnit = null;
+                _selectedWorldUnit.OnUnitPlace += ResetUnit;
             }
         }
+
+        private void CreateAndSelectUnit(Unit unit)
+        {
+            if (_selectedWorldUnit != null) 
+                DestroySelectedUnit();
+          
+            _selectedWorldUnit = _unitFactory.CreateUnit(unit.UnitId);
+            _selectedWorldUnit.OnUnitPlace += ResetUnit;
+            _selectedWorldUnit.Select();
+        }
+
+        private void DestroyAndResetSelectedUnit()
+        {
+            if (_selectedWorldUnit == null) return;
+            _selectedWorldUnit.OnUnitPlace -= ResetUnit;
+            
+            if (_selectedWorldUnit.IsWorldUnit)
+                _selectedWorldUnit.CancelPlace();
+            else
+                DestroySelectedUnit();
+
+            _selectedWorldUnit = null;
+        }
+
+        private void ResetUnit()
+        {
+            _selectedWorldUnit.OnUnitPlace -= ResetUnit;
+            _selectedWorldUnit = null;
+        }
+
+        private void DestroySelectedUnit() => Destroy(_selectedWorldUnit.gameObject);
 
         private bool IsWorldUnitSelected(out WorldUnit unit)
         {
@@ -90,35 +95,5 @@ namespace CodeBase.UnitsSystem
                        Distance, BuildingLayer)
                    && hit.collider.TryGetComponent(out unit);
         }
-
-        private void SelectUnit(Unit unit)
-        {
-            if (_selectedWorldUnit != null) 
-                DestroySelectedUnit();
-          
-            _selectedWorldUnit = _unitFactory.CreateBuilding(unit.UnitId);
-        }
-
-        private void ResetSelectedUnit()
-        {
-            if (_selectedWorldUnit == null) return;
-            DestroySelectedUnit();
-        }
-
-        private void DestroySelectedUnit()
-        {
-            Destroy(_selectedWorldUnit.gameObject);
-            _selectedWorldUnit = null;
-        }
-
-        private bool IsValidPlace() => 
-            Physics.OverlapSphereNonAlloc(_selectedWorldUnit.transform.position, 1, _validColliders, 
-                BuildingLayer) <= 1;
-
-        private void PlaceUnit(Vector3 position) => 
-            _selectedWorldUnit.Place(position);
-
-        private bool HitGround(out RaycastHit hit) => 
-            Physics.Raycast(_mainCamera.ScreenPointToRay(_inputService.PointerPosition()), out hit, Distance, GroundLayer);
     }
 }

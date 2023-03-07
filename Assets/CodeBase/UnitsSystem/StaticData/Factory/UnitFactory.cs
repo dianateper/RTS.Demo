@@ -1,5 +1,8 @@
+using CodeBase.Services;
+using CodeBase.StaticData;
 using CodeBase.UnitsSystem.UnitLogic;
 using UnityEngine;
+using Zenject;
 
 namespace CodeBase.UnitsSystem.StaticData.Factory
 {
@@ -9,11 +12,21 @@ namespace CodeBase.UnitsSystem.StaticData.Factory
         [SerializeField] private UnitsData _unitsData;
         [SerializeField] private UnitSettings _unitSettings;
 
-        public WorldUnit CreateBuilding(string unitId)
+        private IInputService _inputService;
+        private IPlayerStats _playerStats;
+
+        [Inject]
+        public void Construct(IInputService inputService, IPlayerStats playerStats)
         {
-            var unitData = _unitsData.GetUnit(unitId);
-            var unit = Instantiate(unitData.UnitPrefab);
-            unit.Construct(_unitSettings);
+            _inputService = inputService;
+            _playerStats = playerStats;
+        }
+        
+        public WorldUnit CreateUnit(string unitId)
+        {
+            Unit unitData = _unitsData.GetUnit(unitId);
+            WorldUnit unit = Instantiate(unitData.UnitPrefab);
+            unit.Construct(unitData, _unitSettings, _inputService, _playerStats);
             return unit;
         }
     }

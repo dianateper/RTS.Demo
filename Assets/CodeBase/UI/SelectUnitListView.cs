@@ -49,7 +49,6 @@ namespace CodeBase.UI
 
         private void SelectUnit(Unit unit)
         {
-            _playerStats.AddUnit(unit);
             OnUnitSelect?.Invoke(unit);
         }
     }

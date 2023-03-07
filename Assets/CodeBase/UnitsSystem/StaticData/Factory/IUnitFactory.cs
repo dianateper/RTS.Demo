@@ -4,6 +4,6 @@ namespace CodeBase.UnitsSystem.StaticData.Factory
 {
     public interface IUnitFactory
     {
-        WorldUnit CreateBuilding(string unitId);
+        WorldUnit CreateUnit(string unitId);
     }
 }
