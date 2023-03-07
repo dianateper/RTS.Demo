@@ -17,6 +17,7 @@ MonoBehaviour:
   _name: Resource
   _unitId: e84d115e-9c5a-4423-aeeb-39a61ab82938
   _cost: 10
+  _impact: 5
   _productionRate: 5
   _sprite: {fileID: 21300000, guid: 47d50b844302ee042b3ecaecb89b508c, type: 3}
   _initialized: 1

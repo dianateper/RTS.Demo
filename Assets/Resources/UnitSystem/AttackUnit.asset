@@ -17,6 +17,7 @@ MonoBehaviour:
   _name: Attack
   _unitId: 03ec4e87-9762-4050-8f5d-19278065a228
   _cost: 20
+  _impact: 5
   _productionRate: 5
   _sprite: {fileID: 21300000, guid: f5f15c458764b404abffbea386c5721a, type: 3}
   _initialized: 1

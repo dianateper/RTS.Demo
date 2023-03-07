@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace CodeBase.UnitsSystem.UnitLogic.States
 {
@@ -7,9 +8,10 @@ namespace CodeBase.UnitsSystem.UnitLogic.States
         private readonly ProgressRenderer _progressRenderer;
         private readonly WorldUnit _context;
         private readonly float _productionRate;
-
         private float _time;
         private float _progress;
+
+        public event Action OnUnitProduced;
         
         public UnitState StateId => UnitState.Produce;
 
@@ -29,9 +31,12 @@ namespace CodeBase.UnitsSystem.UnitLogic.States
 
         public void Update()
         {
-            _progress = (_time * 100f) / _productionRate;
-            if (_progress >= 100) 
+            _progress = _time * 100f / _productionRate;
+            if (_progress >= 100)
+            {
+                OnUnitProduced?.Invoke();
                 _context.ChangeState(UnitState.Idle);
+            }
 
             _progressRenderer.UpdateProgress(_progress / 100f);
             _time += Time.deltaTime;

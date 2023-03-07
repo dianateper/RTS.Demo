@@ -152,7 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptableObjectInstallers: []
+  _scriptableObjectInstallers:
+  - {fileID: 11400000, guid: e97d5513af586c44e9280e2dd9ce25dc, type: 2}
   _monoInstallers:
   - {fileID: 580382302}
   - {fileID: 1527095466}
@@ -1298,5 +1299,6 @@ PrefabInstance:
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7480287834375941464, guid: ee80c494fd99646459eac045b199a198, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ee80c494fd99646459eac045b199a198, type: 3}

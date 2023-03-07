@@ -13,6 +13,7 @@ namespace CodeBase.UnitsSystem.StaticData
         [SerializeField] private string _name;
         [SerializeField] private string _unitId;
         [SerializeField] private int _cost;
+        [SerializeField] private int _impact;
         [SerializeField] private float _productionRate;
         [SerializeField] private Sprite _sprite;
 
@@ -23,7 +24,8 @@ namespace CodeBase.UnitsSystem.StaticData
         public UnitType UnitType => _unitType;
         public WorldUnit UnitPrefab => _unitPrefab;
         public string UnitId => _unitId;
-       
+        public int Impact => _impact;
+
         [SerializeField, HideInInspector]
         private bool _initialized;
         

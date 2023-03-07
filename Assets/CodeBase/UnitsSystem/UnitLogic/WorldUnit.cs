@@ -20,13 +20,13 @@ namespace CodeBase.UnitsSystem.UnitLogic
         private Unit _unit;
         private UnitStateFactory _unitStateFactory;
         private PlaceUnitState _placeUnitState;
+        private ProduceState _produceUnitState;
 
         private bool _isWorldUnit;
 
         public UnitRenderer UnitRenderer => _unitOutlieRenderer;
         public IInputService InputService => _inputService;
         public UnitSettings UnitSettings => _unitSettings;
-        public bool IsWorldUnit => _isWorldUnit;
         public Unit Unit => _unit;
         public ProgressRenderer ProgressRate => _progressRenderer;
         public event Action OnUnitPlace;
@@ -39,9 +39,10 @@ namespace CodeBase.UnitsSystem.UnitLogic
             _unit = unit;
             _unitOutlieRenderer.Construct(_unitSettings);
             _unitStateFactory = new UnitStateFactory(this);
-            _placeUnitState = _unitStateFactory.GetUnitState(UnitState.Place) as PlaceUnitState;
-            _currentUnitState = _unitStateFactory.GetUnitState(UnitState.Idle);
-            _currentUnitState.Enter();
+            
+            CreateUnitPlaceState();
+            CreateUnitProduceState();
+            CreateAndEnterUnitIdleState();
         }
 
         private void Update()
@@ -51,6 +52,7 @@ namespace CodeBase.UnitsSystem.UnitLogic
 
         private void OnDestroy()
         {
+            _produceUnitState.OnUnitProduced -= OnUnitProduce;
             _currentUnitState?.Exit();
         }
 
@@ -70,6 +72,28 @@ namespace CodeBase.UnitsSystem.UnitLogic
             _stateText.text = $"{stateId}";
         }
 
+        private void CreateAndEnterUnitIdleState()
+        {
+            _currentUnitState = _unitStateFactory.GetUnitState(UnitState.Idle);
+            _currentUnitState.Enter();
+        }
+
+        private void CreateUnitProduceState()
+        {
+            _produceUnitState = _unitStateFactory.GetUnitState(UnitState.Produce) as ProduceState;
+            _produceUnitState.OnUnitProduced += OnUnitProduce;
+        }
+
+        private void CreateUnitPlaceState()
+        {
+            _placeUnitState = _unitStateFactory.GetUnitState(UnitState.Place) as PlaceUnitState;
+        }
+
+        private void OnUnitProduce()
+        {
+            _playerStats.AddResource(_unit);
+        }
+
         private void OnPlaceUnit()
         {
             if (_isWorldUnit == false)
@@ -77,17 +101,9 @@ namespace CodeBase.UnitsSystem.UnitLogic
                 _isWorldUnit = true;
                 _playerStats.AddUnit(_unit);
             }
-
+            
             _placeUnitState.OnUnitPlaced -= OnPlaceUnit;
             OnUnitPlace?.Invoke();
-        }
-
-        public void CancelPlace()
-        {
-            if (_isWorldUnit) 
-                transform.position = _placeUnitState.OriginalPosition;
-           
-            ChangeState(UnitState.Produce);
         }
     }
 }
