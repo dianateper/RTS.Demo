@@ -1,6 +1,5 @@
 ﻿using System;
 using CodeBase.Services;
-using CodeBase.StaticData;
 using CodeBase.UnitsSystem.StaticData;
 using UnityEngine;
 
@@ -23,7 +22,9 @@ namespace CodeBase.UnitsSystem.UnitLogic.States
 
         private Vector3 _originalPosition;
         public Vector3 OriginalPosition => _originalPosition;
-        
+        public UnitState StateId => UnitState.Place;
+
+
         public PlaceUnitState(WorldUnit context)
         {
             _context = context;
@@ -74,7 +75,7 @@ namespace CodeBase.UnitsSystem.UnitLogic.States
             {
                 Place(hit.point);
                 OnUnitPlaced?.Invoke();
-                _context.ChangeState<ProduceState>();
+                _context.ChangeState(UnitState.Produce);
             }
         }
 

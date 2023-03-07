@@ -2,6 +2,8 @@
 {
     public class IdleUnitState : IUnitState
     {
+        public UnitState StateId => UnitState.Idle;
+
         public void Enter()
         {
             

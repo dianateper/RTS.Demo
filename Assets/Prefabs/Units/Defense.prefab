@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6933530152202859907
+--- !u!1001 &798572650139581497
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 2461317514351145183, guid: eba78c665a8c5ea45af5ad7c01a1d66d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 0588be6a6834a6f4eb7f7a5db1cd6f2a, type: 2}
+      objectReference: {fileID: 2100000, guid: 3b83a16117e18df45945c09bb984c91c, type: 2}
     - target: {fileID: 2461317515424110260, guid: eba78c665a8c5ea45af5ad7c01a1d66d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -57,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2461317515424110261, guid: eba78c665a8c5ea45af5ad7c01a1d66d, type: 3}
       propertyPath: m_Name
-      value: Attack
+      value: Defense
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eba78c665a8c5ea45af5ad7c01a1d66d, type: 3}

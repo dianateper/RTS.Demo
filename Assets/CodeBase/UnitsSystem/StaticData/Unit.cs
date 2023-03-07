@@ -13,10 +13,12 @@ namespace CodeBase.UnitsSystem.StaticData
         [SerializeField] private string _name;
         [SerializeField] private string _unitId;
         [SerializeField] private int _cost;
+        [SerializeField] private float _productionRate;
         [SerializeField] private Sprite _sprite;
 
         public string Name => _name;
         public int Cost => _cost;
+        public float ProductionRate => _productionRate;
         public Sprite Sprite => _sprite;
         public UnitType UnitType => _unitType;
         public WorldUnit UnitPrefab => _unitPrefab;

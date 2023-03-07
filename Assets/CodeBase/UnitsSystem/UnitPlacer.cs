@@ -21,16 +21,12 @@ namespace CodeBase.UnitsSystem
         private const int BuildingLayer = 1 << 7;
 
         [Inject]
-        public void Construct(IInputService inputService, UnitViews unitViews, IUnitFactory unitFactory, IPlayerStats playerStats)
+        public void Construct(IInputService inputService, UnitViews unitViews, IUnitFactory unitFactory, IPlayerStats playerStats, Camera mainCamera)
         {
             _unitView = unitViews;
             _inputService = inputService;
             _unitFactory = unitFactory;
-        }
-
-        private void Awake()
-        {
-            _mainCamera = Camera.main;
+            _mainCamera = mainCamera;
         }
 
         private void OnEnable()

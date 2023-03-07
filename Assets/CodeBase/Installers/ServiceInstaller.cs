@@ -13,6 +13,7 @@ namespace CodeBase.Installers
     
         public override void InstallBindings()
         {
+            Container.Bind<Camera>().FromInstance(Camera.main).AsSingle().NonLazy();
             Container.Bind<IInputService>().To<InputService>().FromComponentInNewPrefab(_inputService).AsSingle().NonLazy();
             Container.Bind<IPlayerStats>().To<PlayerStats>().AsSingle().NonLazy();
             Container.Bind<IUnitFactory>().To<UnitFactory>().FromScriptableObjectResource(Constants.UnitFactoryPath).AsSingle().NonLazy();

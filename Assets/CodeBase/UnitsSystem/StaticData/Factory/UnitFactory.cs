@@ -14,18 +14,20 @@ namespace CodeBase.UnitsSystem.StaticData.Factory
 
         private IInputService _inputService;
         private IPlayerStats _playerStats;
-
+        private DiContainer _diContainer;
+        
         [Inject]
-        public void Construct(IInputService inputService, IPlayerStats playerStats)
+        public void Construct(IInputService inputService, IPlayerStats playerStats, DiContainer diContainer)
         {
             _inputService = inputService;
             _playerStats = playerStats;
+            _diContainer = diContainer;
         }
         
         public WorldUnit CreateUnit(string unitId)
         {
             Unit unitData = _unitsData.GetUnit(unitId);
-            WorldUnit unit = Instantiate(unitData.UnitPrefab);
+            WorldUnit unit = _diContainer.InstantiatePrefab(unitData.UnitPrefab).GetComponent<WorldUnit>();
             unit.Construct(unitData, _unitSettings, _inputService, _playerStats);
             return unit;
         }

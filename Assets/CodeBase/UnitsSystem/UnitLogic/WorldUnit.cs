@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
 using CodeBase.Services;
 using CodeBase.StaticData;
 using CodeBase.UnitsSystem.StaticData;
 using CodeBase.UnitsSystem.UnitLogic.States;
+using TMPro;
 using UnityEngine;
 
 namespace CodeBase.UnitsSystem.UnitLogic
@@ -11,24 +11,25 @@ namespace CodeBase.UnitsSystem.UnitLogic
     public class WorldUnit : MonoBehaviour
     {
         [SerializeField] private UnitRenderer _unitOutlieRenderer;
+        [SerializeField] private TMP_Text _stateText;
+        [SerializeField] private ProgressRenderer _progressRenderer;
         private IUnitState _currentUnitState;
         private IInputService _inputService;
         private UnitSettings _unitSettings;
+        private IPlayerStats _playerStats;
+        private Unit _unit;
+        private UnitStateFactory _unitStateFactory;
+        private PlaceUnitState _placeUnitState;
+
+        private bool _isWorldUnit;
+
         public UnitRenderer UnitRenderer => _unitOutlieRenderer;
         public IInputService InputService => _inputService;
         public UnitSettings UnitSettings => _unitSettings;
         public bool IsWorldUnit => _isWorldUnit;
-        private IPlayerStats _playerStats;
-
+        public Unit Unit => _unit;
+        public ProgressRenderer ProgressRate => _progressRenderer;
         public event Action OnUnitPlace;
-
-        private List<IUnitState> _unitStates = new List<IUnitState>();
-        
-        private PlaceUnitState _placeUnitState;
-        private IdleUnitState _idleUnitState;
-        private ProduceState _produceState;
-        private bool _isWorldUnit;
-        private Unit _unit;
 
         public void Construct(Unit unit, UnitSettings unitSettings, IInputService inputService,IPlayerStats playerStats)
         {
@@ -37,12 +38,10 @@ namespace CodeBase.UnitsSystem.UnitLogic
             _playerStats = playerStats;
             _unit = unit;
             _unitOutlieRenderer.Construct(_unitSettings);
-            _placeUnitState = new PlaceUnitState(this);
-            _idleUnitState = new IdleUnitState();
-            _produceState = new ProduceState();
-            _unitStates.AddRange(new IUnitState[]{_placeUnitState, _idleUnitState, _produceState});
-            
-            ChangeState<IdleUnitState>();
+            _unitStateFactory = new UnitStateFactory(this);
+            _placeUnitState = _unitStateFactory.GetUnitState(UnitState.Place) as PlaceUnitState;
+            _currentUnitState = _unitStateFactory.GetUnitState(UnitState.Idle);
+            _currentUnitState.Enter();
         }
 
         private void Update()
@@ -57,16 +56,18 @@ namespace CodeBase.UnitsSystem.UnitLogic
 
         public void Select()
         {
+            if (_currentUnitState.StateId == UnitState.Produce) return;
             _placeUnitState.OnUnitPlaced += OnPlaceUnit;
-            ChangeState<PlaceUnitState>();
+            ChangeState(UnitState.Place);
         }
 
-        public void ChangeState<T>()
+        public void ChangeState(UnitState stateId)
         {
             _currentUnitState?.Exit();
-            var state = _unitStates.Find(s => s.GetType() == typeof(T));
+            var state = _unitStateFactory.GetUnitState(stateId);
             state.Enter();
             _currentUnitState = state;
+            _stateText.text = $"{stateId}";
         }
 
         private void OnPlaceUnit()
@@ -85,8 +86,8 @@ namespace CodeBase.UnitsSystem.UnitLogic
         {
             if (_isWorldUnit) 
                 transform.position = _placeUnitState.OriginalPosition;
-            
-            ChangeState<ProduceState>();
+           
+            ChangeState(UnitState.Produce);
         }
     }
 }
