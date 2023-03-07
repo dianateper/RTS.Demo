@@ -6,9 +6,9 @@ namespace CodeBase.UnitsSystem.UnitLogic.States
     public class UnitStateFactory
     {
         private readonly List<IUnitState> _unitStates;
-        private readonly WorldUnit _context;
+        private readonly BaseWorldUnit _context;
 
-        public UnitStateFactory(WorldUnit context)
+        public UnitStateFactory(BaseWorldUnit context)
         {
             _unitStates = new List<IUnitState>();
             _context = context;
@@ -33,8 +33,11 @@ namespace CodeBase.UnitsSystem.UnitLogic.States
                 case UnitState.Place:
                     state = new PlaceUnitState(_context);
                     break;
-                case UnitState.Produce:
-                    state = new ProduceState(_context);
+                case UnitState.Build:
+                    state = new UnitBuildState(_context);
+                    break;
+                case UnitState.Action:
+                    state = new UnitActionState(_context);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(unitState), unitState, null);

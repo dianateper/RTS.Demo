@@ -24,10 +24,10 @@ namespace CodeBase.UnitsSystem.StaticData.Factory
             _diContainer = diContainer;
         }
         
-        public WorldUnit CreateUnit(string unitId)
+        public BaseWorldUnit CreateUnit(string unitId)
         {
             Unit unitData = _unitsData.GetUnit(unitId);
-            WorldUnit unit = _diContainer.InstantiatePrefab(unitData.UnitPrefab).GetComponent<WorldUnit>();
+            BaseWorldUnit unit = _diContainer.InstantiatePrefab(unitData.UnitPrefab).GetComponent<BaseWorldUnit>();
             unit.Construct(unitData, _unitSettings, _inputService, _playerStats);
             return unit;
         }

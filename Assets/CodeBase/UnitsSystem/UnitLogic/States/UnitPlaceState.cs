@@ -7,7 +7,7 @@ namespace CodeBase.UnitsSystem.UnitLogic.States
 {
     public class PlaceUnitState : IUnitState
     {
-        private readonly WorldUnit _context;
+        private readonly BaseWorldUnit _context;
         private IInputService _inputService;
         private UnitSettings _unitSettings;
         private UnitRenderer _unitOutlineRenderer;
@@ -19,13 +19,11 @@ namespace CodeBase.UnitsSystem.UnitLogic.States
         private const int GroundLayer = 1 << 6;
 
         public event Action OnUnitPlaced;
-
-        private Vector3 _originalPosition;
-        public Vector3 OriginalPosition => _originalPosition;
+        
         public UnitState StateId => UnitState.Place;
 
 
-        public PlaceUnitState(WorldUnit context)
+        public PlaceUnitState(BaseWorldUnit context)
         {
             _context = context;
         }
@@ -75,7 +73,7 @@ namespace CodeBase.UnitsSystem.UnitLogic.States
             {
                 Place(hit.point);
                 OnUnitPlaced?.Invoke();
-                _context.ChangeState(UnitState.Produce);
+                _context.ChangeState(UnitState.Build);
             }
         }
 
@@ -92,10 +90,6 @@ namespace CodeBase.UnitsSystem.UnitLogic.States
             Physics.OverlapSphereNonAlloc(_context.transform.position, 1, _validColliders, 
                 BuildingLayer) <= 1;
         
-        private void Place(Vector3 position)
-        {
-            _context.transform.position = position;
-            _originalPosition = position;
-        }
+        private void Place(Vector3 position) => _context.transform.position = position;
     }
 }

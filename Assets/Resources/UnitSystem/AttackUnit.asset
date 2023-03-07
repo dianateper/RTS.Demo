@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AttackUnit
   m_EditorClassIdentifier: 
   _unitType: 2
-  _unitPrefab: {fileID: 7510403740811442151, guid: 0e60a6cfb61e27945aea76067d91a38f, type: 3}
+  _unitPrefab: {fileID: 7074061663691728591, guid: 0e60a6cfb61e27945aea76067d91a38f, type: 3}
   _name: Attack
   _unitId: 03ec4e87-9762-4050-8f5d-19278065a228
   _cost: 20

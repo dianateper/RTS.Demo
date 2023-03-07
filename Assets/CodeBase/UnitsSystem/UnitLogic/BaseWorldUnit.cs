@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace CodeBase.UnitsSystem.UnitLogic
 {
-    public class WorldUnit : MonoBehaviour
+    public abstract class BaseWorldUnit : MonoBehaviour
     {
         [SerializeField] private UnitRenderer _unitOutlieRenderer;
         [SerializeField] private TMP_Text _stateText;
@@ -20,10 +20,8 @@ namespace CodeBase.UnitsSystem.UnitLogic
         private Unit _unit;
         private UnitStateFactory _unitStateFactory;
         private PlaceUnitState _placeUnitState;
-        private ProduceState _produceUnitState;
-
-        private bool _isWorldUnit;
-
+        private UnitBuildState _unitBuildUnitState;
+        
         public UnitRenderer UnitRenderer => _unitOutlieRenderer;
         public IInputService InputService => _inputService;
         public UnitSettings UnitSettings => _unitSettings;
@@ -41,9 +39,11 @@ namespace CodeBase.UnitsSystem.UnitLogic
             _unitStateFactory = new UnitStateFactory(this);
             
             CreateUnitPlaceState();
-            CreateUnitProduceState();
+            CreateUnitBuildState();
             CreateAndEnterUnitIdleState();
         }
+
+        public abstract void DoAction();
 
         private void Update()
         {
@@ -52,13 +52,13 @@ namespace CodeBase.UnitsSystem.UnitLogic
 
         private void OnDestroy()
         {
-            _produceUnitState.OnUnitProduced -= OnUnitProduce;
+            _unitBuildUnitState.OnUnitBuild -= OnUnitUnitBuild;
             _currentUnitState?.Exit();
         }
 
         public void Select()
         {
-            if (_currentUnitState.StateId == UnitState.Produce) return;
+            if (_currentUnitState.StateId == UnitState.Build) return;
             _placeUnitState.OnUnitPlaced += OnPlaceUnit;
             ChangeState(UnitState.Place);
         }
@@ -78,10 +78,10 @@ namespace CodeBase.UnitsSystem.UnitLogic
             _currentUnitState.Enter();
         }
 
-        private void CreateUnitProduceState()
+        private void CreateUnitBuildState()
         {
-            _produceUnitState = _unitStateFactory.GetUnitState(UnitState.Produce) as ProduceState;
-            _produceUnitState.OnUnitProduced += OnUnitProduce;
+            _unitBuildUnitState = _unitStateFactory.GetUnitState(UnitState.Build) as UnitBuildState;
+            _unitBuildUnitState.OnUnitBuild += OnUnitUnitBuild;
         }
 
         private void CreateUnitPlaceState()
@@ -89,19 +89,14 @@ namespace CodeBase.UnitsSystem.UnitLogic
             _placeUnitState = _unitStateFactory.GetUnitState(UnitState.Place) as PlaceUnitState;
         }
 
-        private void OnUnitProduce()
+        private void OnUnitUnitBuild()
         {
             _playerStats.AddResource(_unit);
         }
 
         private void OnPlaceUnit()
         {
-            if (_isWorldUnit == false)
-            {
-                _isWorldUnit = true;
-                _playerStats.AddUnit(_unit);
-            }
-            
+            _playerStats.AddUnit(_unit);
             _placeUnitState.OnUnitPlaced -= OnPlaceUnit;
             OnUnitPlace?.Invoke();
         }

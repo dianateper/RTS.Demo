@@ -9,7 +9,7 @@ namespace CodeBase.UnitsSystem.StaticData
     public class Unit : ScriptableObject
     {
         [SerializeField] private UnitType _unitType;
-        [SerializeField] private WorldUnit _unitPrefab;
+        [SerializeField] private BaseWorldUnit _unitPrefab;
         [SerializeField] private string _name;
         [SerializeField] private string _unitId;
         [SerializeField] private int _cost;
@@ -22,7 +22,7 @@ namespace CodeBase.UnitsSystem.StaticData
         public float ProductionRate => _productionRate;
         public Sprite Sprite => _sprite;
         public UnitType UnitType => _unitType;
-        public WorldUnit UnitPrefab => _unitPrefab;
+        public BaseWorldUnit UnitPrefab => _unitPrefab;
         public string UnitId => _unitId;
         public int Impact => _impact;
 

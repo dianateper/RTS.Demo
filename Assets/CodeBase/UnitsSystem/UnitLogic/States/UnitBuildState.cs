@@ -3,19 +3,19 @@ using UnityEngine;
 
 namespace CodeBase.UnitsSystem.UnitLogic.States
 {
-    public class ProduceState : IUnitState
+    public class UnitBuildState : IUnitState
     {
         private readonly ProgressRenderer _progressRenderer;
-        private readonly WorldUnit _context;
+        private readonly BaseWorldUnit _context;
         private readonly float _productionRate;
         private float _time;
         private float _progress;
 
-        public event Action OnUnitProduced;
+        public event Action OnUnitBuild;
         
-        public UnitState StateId => UnitState.Produce;
+        public UnitState StateId => UnitState.Build;
 
-        public ProduceState(WorldUnit context)
+        public UnitBuildState(BaseWorldUnit context)
         {
             _context = context;
             _progressRenderer = _context.ProgressRate;
@@ -34,7 +34,7 @@ namespace CodeBase.UnitsSystem.UnitLogic.States
             _progress = _time * 100f / _productionRate;
             if (_progress >= 100)
             {
-                OnUnitProduced?.Invoke();
+                OnUnitBuild?.Invoke();
                 _context.ChangeState(UnitState.Idle);
             }
 

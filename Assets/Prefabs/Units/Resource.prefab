@@ -57,3 +57,56 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eba78c665a8c5ea45af5ad7c01a1d66d, type: 3}
+--- !u!1 &1831111057842237459 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2461317515424110261, guid: eba78c665a8c5ea45af5ad7c01a1d66d, type: 3}
+  m_PrefabInstance: {fileID: 4269749942739068582}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8735328427466484543 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -4432900895969768039, guid: eba78c665a8c5ea45af5ad7c01a1d66d, type: 3}
+  m_PrefabInstance: {fileID: 4269749942739068582}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831111057842237459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffc748893883424b8ee79fe2d5afecfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4539889202341900196 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 306772396118673666, guid: eba78c665a8c5ea45af5ad7c01a1d66d, type: 3}
+  m_PrefabInstance: {fileID: 4269749942739068582}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8044901957045650156 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6117024397145007178, guid: eba78c665a8c5ea45af5ad7c01a1d66d, type: 3}
+  m_PrefabInstance: {fileID: 4269749942739068582}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96feadd3fc0e4448accacb94aa7083cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8645073839664251940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831111057842237459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d042787c8bf94165bda8d329961e897d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitOutlieRenderer: {fileID: 8735328427466484543}
+  _stateText: {fileID: 4539889202341900196}
+  _progressRenderer: {fileID: 8044901957045650156}

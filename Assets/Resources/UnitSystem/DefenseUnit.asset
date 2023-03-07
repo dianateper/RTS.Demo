@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DefenseUnit
   m_EditorClassIdentifier: 
   _unitType: 1
-  _unitPrefab: {fileID: 222806140356869725, guid: ac60dc8d88dc7e34b8c181cbecd03992, type: 3}
+  _unitPrefab: {fileID: 6443356840829135380, guid: ac60dc8d88dc7e34b8c181cbecd03992, type: 3}
   _name: Defense
   _unitId: 1c5f5518-d266-447c-9821-0c29a5af43da
   _cost: 15

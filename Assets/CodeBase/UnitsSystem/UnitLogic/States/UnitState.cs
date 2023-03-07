@@ -4,6 +4,7 @@
     {
         Idle,
         Place, 
-        Produce
+        Build,
+        Action
     }
 }

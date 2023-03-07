@@ -13,7 +13,7 @@ namespace CodeBase.UnitsSystem
     {
         private IUnitFactory _unitFactory;
         private UnitViews _unitView;
-        private WorldUnit _selectedWorldUnit;
+        private BaseWorldUnit _selectedBaseWorldUnit;
         private IInputService _inputService;
         
         [Inject]
@@ -38,30 +38,30 @@ namespace CodeBase.UnitsSystem
 
         private void CreateAndSelectUnit(Unit unit)
         {
-            if (_selectedWorldUnit != null) 
+            if (_selectedBaseWorldUnit != null) 
                 DestroySelectedUnit();
           
-            _selectedWorldUnit = _unitFactory.CreateUnit(unit.UnitId);
-            _selectedWorldUnit.OnUnitPlace += ResetUnit;
-            _selectedWorldUnit.Select();
+            _selectedBaseWorldUnit = _unitFactory.CreateUnit(unit.UnitId);
+            _selectedBaseWorldUnit.OnUnitPlace += ResetUnit;
+            _selectedBaseWorldUnit.Select();
         }
 
         private void DestroyAndResetSelectedUnit()
         {
-            if (_selectedWorldUnit == null) return;
-            _selectedWorldUnit.OnUnitPlace -= ResetUnit;
+            if (_selectedBaseWorldUnit == null) return;
+            _selectedBaseWorldUnit.OnUnitPlace -= ResetUnit;
             
             DestroySelectedUnit();
 
-            _selectedWorldUnit = null;
+            _selectedBaseWorldUnit = null;
         }
 
         private void ResetUnit()
         {
-            _selectedWorldUnit.OnUnitPlace -= ResetUnit;
-            _selectedWorldUnit = null;
+            _selectedBaseWorldUnit.OnUnitPlace -= ResetUnit;
+            _selectedBaseWorldUnit = null;
         }
 
-        private void DestroySelectedUnit() => Destroy(_selectedWorldUnit.gameObject);
+        private void DestroySelectedUnit() => Destroy(_selectedBaseWorldUnit.gameObject);
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ResourceUnit
   m_EditorClassIdentifier: 
   _unitType: 0
-  _unitPrefab: {fileID: 3694001085344818370, guid: b6688b9d7df9f254e8276d845e74795b, type: 3}
+  _unitPrefab: {fileID: 8645073839664251940, guid: b6688b9d7df9f254e8276d845e74795b, type: 3}
   _name: Resource
   _unitId: e84d115e-9c5a-4423-aeeb-39a61ab82938
   _cost: 10
