@@ -36,12 +36,12 @@ namespace CodeBase.UnitsSystem.UnitLogic.States
             _validColliders = new Collider[2];
             _mainCamera = Camera.main;
             _unitOutlineRenderer.EnableRenderer();
-            _inputService.OnUnitSelect += PlaceUnit;
+            _inputService.OnUnitPlace += PlaceUnit;
         }
 
         public void Exit()
         {
-            _inputService.OnUnitSelect -= PlaceUnit;
+            _inputService.OnUnitPlace -= PlaceUnit;
             _unitOutlineRenderer.DisableRenderer();
         }
 

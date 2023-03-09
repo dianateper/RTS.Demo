@@ -5,6 +5,7 @@ namespace CodeBase.Services
 {
     public interface IInputService
     {
+        event Action OnUnitPlace;
         event Action OnUnitSelect;
         event Action OnCancel;
         float GetHorizontalMovement();

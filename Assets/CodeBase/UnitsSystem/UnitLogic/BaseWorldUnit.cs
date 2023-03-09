@@ -43,8 +43,6 @@ namespace CodeBase.UnitsSystem.UnitLogic
             CreateAndEnterUnitIdleState();
         }
 
-        public abstract void DoAction();
-
         private void Update()
         {
             _currentUnitState.Update();
@@ -54,6 +52,14 @@ namespace CodeBase.UnitsSystem.UnitLogic
         {
             _unitBuildUnitState.OnUnitBuild -= OnUnitUnitBuild;
             _currentUnitState?.Exit();
+        }
+
+        public abstract void DoAction();
+
+        public void Action()
+        {
+            if (_currentUnitState.StateId == UnitState.Idle)
+               ChangeState(UnitState.Action);
         }
 
         public void Select()

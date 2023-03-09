@@ -5,6 +5,7 @@ namespace CodeBase.Services
 {
     public class InputService : MonoBehaviour, IInputService
     {
+        public event Action OnUnitPlace;
         public event Action OnUnitSelect;
         public event Action OnCancel;
         
@@ -25,6 +26,9 @@ namespace CodeBase.Services
         private void Update()
         {
             if (Input.GetMouseButtonDown(0)) 
+                OnUnitPlace?.Invoke();
+            
+            if (Input.GetMouseButtonDown(1)) 
                 OnUnitSelect?.Invoke();
             
             if (Input.GetKeyDown(KeyCode.Escape)) 
