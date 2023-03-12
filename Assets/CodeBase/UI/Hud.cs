@@ -1,4 +1,5 @@
 using CodeBase.StaticData;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,10 +10,10 @@ namespace CodeBase.UI
     public class Hud : MonoBehaviour
     {
         [SerializeField] private TMP_Text _gold;
-        [SerializeField] private TMP_Text _unitsStats;
-        [SerializeField] private Image _defense;
+        [SerializeField] private TMP_Text _nickname;
         [SerializeField] private Image _attack;
-
+        [SerializeField] private Image _defense;
+      
         private IPlayerStats _playerStats;
 
         [Inject]
@@ -21,6 +22,7 @@ namespace CodeBase.UI
             _playerStats = playerStats;
             _playerStats.OnUnitStatsChanged += UpdateStats;
             _playerStats.OnResourceChanged += UpdateResource;
+            _nickname.text = PhotonNetwork.LocalPlayer.NickName;
             UpdateResource();
             UpdateStats();
         }
@@ -33,19 +35,14 @@ namespace CodeBase.UI
 
         private void UpdateResource()
         {
-            _defense.fillAmount = _playerStats.DefensePercent;
-            _attack.fillAmount = _playerStats.AttackPercent;
             _gold.text = $"Gold: {_playerStats.Gold}";
+            _attack.fillAmount = _playerStats.AttackPercent;
+            _defense.fillAmount = _playerStats.DefensePercent;
         }
 
         private void UpdateStats()
         {
             _gold.text = $"Gold: {_playerStats.Gold}";
-            _unitsStats.text = string.Empty;
-            foreach (var stats in _playerStats.UnitsCount)
-            {
-                _unitsStats.text += $"{stats.Key}: {stats.Value}\n";
-            }
         }
     }
 }

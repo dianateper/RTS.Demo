@@ -8,6 +8,7 @@ namespace CodeBase.Services
         event Action OnUnitPlace;
         event Action OnUnitSelect;
         event Action OnCancel;
+        event Action OnToggleMenu;
         float GetHorizontalMovement();
         float GetVerticalMovement();
         Vector3 PointerPosition();

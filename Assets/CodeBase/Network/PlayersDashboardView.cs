@@ -16,7 +16,6 @@ namespace CodeBase.Network
         {
             _players = new Dictionary<Player, PlayerItemView>();
             LoadPlayers();
-            gameObject.SetActive(false);
         }
 
         private void LoadPlayers()

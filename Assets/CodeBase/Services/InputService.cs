@@ -8,7 +8,8 @@ namespace CodeBase.Services
         public event Action OnUnitPlace;
         public event Action OnUnitSelect;
         public event Action OnCancel;
-        
+        public event Action OnToggleMenu;
+
         public float GetHorizontalMovement() => Input.GetAxisRaw("Horizontal");
 
         public float GetVerticalMovement() => Input.GetAxisRaw("Vertical");
@@ -33,6 +34,9 @@ namespace CodeBase.Services
             
             if (Input.GetKeyDown(KeyCode.Escape)) 
                 OnCancel?.Invoke();
+            
+            if(Input.GetKeyDown(KeyCode.Tab))
+                OnToggleMenu?.Invoke();
         }
     }
 }

@@ -1318,7 +1318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitViews: {fileID: 3568629220867782508, guid: 54a2d1f73f2e8154bbd43b2f2e4639fa, type: 3}
-  _playersDashboard: {fileID: 5497818439909279658, guid: df47b5fd6a6ed5c4a9e37d95ba0a2da3, type: 3}
+  _menu: {fileID: 9016693298080220781, guid: 19b236ed963223d4880b15d05181c547, type: 3}
 --- !u!1 &1591174411
 GameObject:
   m_ObjectHideFlags: 0
@@ -1575,6 +1575,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1730077738}
   - component: {fileID: 1730077739}
+  - component: {fileID: 1730077740}
   m_Layer: 0
   m_Name: UnitsManagement
   m_TagString: Untagged
@@ -1607,6 +1608,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0dedce26cd628d4eb7b7d1b325cb9b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1730077740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1730077737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e68112bf1e4f0499d32551f03d79cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2014673897
