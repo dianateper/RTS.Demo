@@ -1,3 +1,4 @@
+using CodeBase.PlayerData;
 using CodeBase.StaticData;
 using Photon.Pun;
 using TMPro;

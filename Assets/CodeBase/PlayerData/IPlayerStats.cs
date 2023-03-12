@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using CodeBase.UnitsSystem.StaticData;
 
-namespace CodeBase.StaticData
+namespace CodeBase.PlayerData
 {
     public interface IPlayerStats
     {

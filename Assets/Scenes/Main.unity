@@ -1318,6 +1318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitViews: {fileID: 3568629220867782508, guid: 54a2d1f73f2e8154bbd43b2f2e4639fa, type: 3}
+  _popupSystem: {fileID: 4454867273858365251, guid: 36e8abd999a6f884083f74c8d9d9f2a3, type: 3}
   _menu: {fileID: 9016693298080220781, guid: 19b236ed963223d4880b15d05181c547, type: 3}
 --- !u!1 &1591174411
 GameObject:

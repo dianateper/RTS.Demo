@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CodeBase.PlayerData;
 using CodeBase.StaticData;
 using CodeBase.UnitsSystem.StaticData;
 using UnityEngine;

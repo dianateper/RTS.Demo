@@ -1,5 +1,5 @@
+using CodeBase.PlayerData;
 using CodeBase.Services;
-using CodeBase.StaticData;
 using CodeBase.UI;
 using CodeBase.UnitsSystem.StaticData;
 using CodeBase.UnitsSystem.StaticData.Factory;

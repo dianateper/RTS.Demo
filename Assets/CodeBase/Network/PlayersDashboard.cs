@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CodeBase.PlayerData;
 using CodeBase.StaticData;
 using ExitGames.Client.Photon;
 using Photon.Pun;

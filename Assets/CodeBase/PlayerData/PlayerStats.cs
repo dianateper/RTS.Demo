@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using CodeBase.StaticData;
 using CodeBase.UnitsSystem.StaticData;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using UnityEngine;
 using Zenject;
 
-namespace CodeBase.StaticData
+namespace CodeBase.PlayerData
 {
     [Serializable]
     public class PlayerStats : IPlayerStats
