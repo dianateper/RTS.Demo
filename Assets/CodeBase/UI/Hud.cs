@@ -33,8 +33,8 @@ namespace CodeBase.UI
 
         private void UpdateResource()
         {
-            _defense.fillAmount = _playerStats.Defense;
-            _attack.fillAmount = _playerStats.Attack;
+            _defense.fillAmount = _playerStats.DefensePercent;
+            _attack.fillAmount = _playerStats.AttackPercent;
             _gold.text = $"Gold: {_playerStats.Gold}";
         }
 

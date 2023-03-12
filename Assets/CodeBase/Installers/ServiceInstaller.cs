@@ -10,7 +10,7 @@ namespace CodeBase.Installers
     public class ServiceInstaller : MonoInstaller
     {
         [SerializeField] private InputService _inputService;
-    
+      
         public override void InstallBindings()
         {
             Container.Bind<Camera>().FromInstance(Camera.main).AsSingle().NonLazy();

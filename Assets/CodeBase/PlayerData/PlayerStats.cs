@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeBase.UnitsSystem.StaticData;
+using ExitGames.Client.Photon;
+using Photon.Pun;
 using UnityEngine;
 using Zenject;
 
 namespace CodeBase.StaticData
 {
+    [Serializable]
     public class PlayerStats : IPlayerStats
     {
         private int _gold;
@@ -15,10 +18,24 @@ namespace CodeBase.StaticData
         private Dictionary<UnitType, int> _unitsCount;
         private readonly int _maxAttack;
         private readonly int _maxDefense;
+        private readonly Hashtable _props;
 
         public int Gold => _gold;
-        public float Attack => (float)_attack / _maxAttack;
-        public float Defense => (float)_defense / _maxDefense;
+        public float AttackPercent => (float)_attack / _maxAttack;
+        public int Attack
+        {
+            get => _attack;
+            set => _attack = value;
+        }
+        
+        public int Defense
+        {
+            get => _defense;
+            set => _defense = value;
+        }
+
+        public float DefensePercent => (float)_defense / _maxDefense;
+
         public Dictionary<UnitType, int> UnitsCount => _unitsCount;
         public event Action OnResourceChanged;
         public event Action OnUnitStatsChanged;
@@ -30,6 +47,8 @@ namespace CodeBase.StaticData
             _maxAttack = playerSettings.MaxAttack;
             _maxDefense = playerSettings.MaxDefense;
             _unitsCount = new Dictionary<UnitType, int>();
+            _props = new Hashtable();
+            UpdatePlayerData();
         }
 
         public void AddUnit(Unit unit)
@@ -59,7 +78,15 @@ namespace CodeBase.StaticData
                     throw new ArgumentOutOfRangeException();
             }
             
+            UpdatePlayerData();
             OnResourceChanged?.Invoke();
+        }
+
+        private void UpdatePlayerData()
+        {
+            _props[Constants.AttackKey] = Attack;
+            _props[Constants.DefenseKey] = Defense;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(_props);
         }
     }
 }
