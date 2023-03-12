@@ -9,7 +9,7 @@ namespace CodeBase.Network
     {
         [SerializeField] private TMP_InputField _playerNameInput;
         [SerializeField] private Button _loginButton;
-
+       
         public event Action<string> OnLogin;
         
         private void Awake()

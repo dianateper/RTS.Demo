@@ -10,7 +10,7 @@ namespace CodeBase.Network
       [SerializeField] private TMP_InputField _roomNameInputField;
       [SerializeField] private Button _joinRoomButton;
       [SerializeField] private Button _createRoomButton;
-
+     
       public event Action<string> OnCreateRoom;
       public event Action<string> OnJoinRoom;
    

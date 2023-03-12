@@ -49,14 +49,15 @@ namespace CodeBase.PlayerData
 
         public void OnEvent(EventData photonEvent)
         {
-            var sender = PhotonNetwork.CurrentRoom.GetPlayer(photonEvent.Sender);
             byte eventCode = photonEvent.Code;
             if (eventCode == MakeAllianceEventCode)
             {
+                var sender = PhotonNetwork.CurrentRoom.GetPlayer(photonEvent.Sender);
                 _popupSystem.ShowPopup("Alliance event", $"{sender.NickName} make an alliance");
             }
             else if (eventCode == AttackEventCode)
             {
+                var sender = PhotonNetwork.CurrentRoom.GetPlayer(photonEvent.Sender);
                 _popupSystem.ShowPopup("Attack event", $"{sender.NickName} attack you");
             }
         }
