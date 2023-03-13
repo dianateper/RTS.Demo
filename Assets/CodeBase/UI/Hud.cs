@@ -36,14 +36,14 @@ namespace CodeBase.UI
 
         private void UpdateResource()
         {
-            _gold.text = $"Gold: {_playerStats.Gold}";
+            _gold.text = $"{_playerStats.Gold}";
             _attack.fillAmount = _playerStats.AttackPercent;
             _defense.fillAmount = _playerStats.DefensePercent;
         }
 
         private void UpdateStats()
         {
-            _gold.text = $"Gold: {_playerStats.Gold}";
+            _gold.text = $"{_playerStats.Gold}";
         }
     }
 }
