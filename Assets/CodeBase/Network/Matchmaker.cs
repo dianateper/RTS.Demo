@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using CodeBase.UI;
+using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
@@ -6,16 +7,18 @@ namespace CodeBase.Network
 {
     public class Matchmaker : MonoBehaviourPunCallbacks
     {
-        [SerializeField] private GameObject _loading;
+        [SerializeField] private Curtain _curtainPrefab;
      
         [SerializeField] private MatchmakerView _matchmakerView;
         [SerializeField] private LoginView _loginView;
      
         private const string GameVersion = "1";
         private bool _isConnecting;
-     
+        private Curtain _curtain;
+
         private void Awake()
         {
+            _curtain = Instantiate(_curtainPrefab);
             PhotonNetwork.AutomaticallySyncScene = true;
             _matchmakerView.OnCreateRoom += CreateRoom;
             _matchmakerView.OnJoinRoom += JoinRoom;
@@ -28,48 +31,50 @@ namespace CodeBase.Network
             _matchmakerView.OnCreateRoom -= CreateRoom;
             _matchmakerView.OnJoinRoom -= JoinRoom;
         }
-
+       
         public override void OnConnectedToMaster()
         {
             _loginView.gameObject.SetActive(false);
             _matchmakerView.gameObject.SetActive(true);
+            _curtain.Hide();
         }
 
         public override void OnJoinedRoom()
         {
+            _curtain.Hide();
             PhotonNetwork.LoadLevel(Constants.MainScene);
         }
 
         public override void OnCreateRoomFailed(short returnCode, string message)
         {
+            _curtain.Hide();
             Debug.LogError($"OnCreateRoomFailed {message}");
-            _loading.SetActive(false);
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
+            _curtain.Hide();
             Debug.LogError($"OnJoinRoomFailed {message}");
-            _loading.SetActive(false);
         }
 
         private void JoinRoom(string roomName)
         {
+            _curtain.Show();
             PhotonNetwork.JoinRoom(roomName);
-            _loading.SetActive(true);
         }
 
         private void CreateRoom(string roomName)
         {
+            _curtain.Show();
             PhotonNetwork.CreateRoom(roomName, new RoomOptions
             {
                 MaxPlayers = 4
             });
-            
-            _loading.SetActive(true);
         }
 
         private void Login(string playerName)
         {
+            _curtain.Show();
             PhotonNetwork.LocalPlayer.NickName = playerName;
             PhotonNetwork.GameVersion = GameVersion;
             PhotonNetwork.ConnectUsingSettings();
