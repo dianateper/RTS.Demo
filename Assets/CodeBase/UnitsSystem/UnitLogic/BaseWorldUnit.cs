@@ -1,7 +1,6 @@
 using System;
-using CodeBase.PlayerData;
+using CodeBase.PlayerLogic;
 using CodeBase.Services;
-using CodeBase.StaticData;
 using CodeBase.UnitsSystem.StaticData;
 using CodeBase.UnitsSystem.UnitLogic.States;
 using TMPro;

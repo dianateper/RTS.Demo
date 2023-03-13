@@ -7,11 +7,6 @@ namespace CodeBase.UI
     {
         [SerializeField] private CanvasGroup _canvasGroup;
         private const float Duration = 1f;
-       
-        private void Start()
-        {
-            DontDestroyOnLoad(gameObject);
-        }
 
         public void Show()
         {

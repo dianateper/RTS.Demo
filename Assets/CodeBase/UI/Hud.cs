@@ -1,4 +1,4 @@
-using CodeBase.PlayerData;
+using CodeBase.PlayerLogic;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;

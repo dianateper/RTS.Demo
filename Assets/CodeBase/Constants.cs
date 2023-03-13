@@ -9,5 +9,6 @@
         
         public const string AttackKey = "Attack";
         public const string DefenseKey = "Defense";
+        public const string PlayerFactoryPath = "Player/PlayerFactory";
     }
 }

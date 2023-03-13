@@ -1,39 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using CodeBase.UI;
+﻿using CodeBase.UI;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using Zenject;
+using UnityEngine;
 
-namespace CodeBase.PlayerData
+namespace CodeBase.PlayerLogic
 {
-    public class PlayerBase : IPlayerBase, IOnEventCallback, IDisposable
+    [RequireComponent(typeof(PhotonView))]
+    public class PlayerMono : MonoBehaviour, IPunObservable, IOnEventCallback
     {
+        [SerializeField] private PhotonView _photonView;
+        private PopupSystem _popupSystem;
+        
         private const byte MakeAllianceEventCode = 1;
         private const byte AttackEventCode = 2;
 
-        private readonly List<Player> _alliance = new();
-        private readonly List<Player> _enemies = new();
-
-        private IPlayerStats _playerStats;
-        private readonly PopupSystem _popupSystem;
-
-        public List<Player> Alliance => _alliance;
-
-        public List<Player> Enemies => _enemies;
-        
-        [Inject]
-        public PlayerBase(IPlayerStats playerStats, PopupSystem popupSystem)
+        public void Construct(PopupSystem popupSystem)
         {
-            _playerStats = playerStats;
             _popupSystem = popupSystem;
             PhotonNetwork.AddCallbackTarget(this);
         }
 
+        public void OnDestroy()
+        {
+            PhotonNetwork.RemoveCallbackTarget(this);
+        }
+
         public void MakeAlliance(Player player)
         {
-            _alliance.Add(player);
             RaiseEventOptions options = new RaiseEventOptions { TargetActors = new[] { player.ActorNumber } };
             PhotonNetwork.RaiseEvent(MakeAllianceEventCode, PhotonNetwork.LocalPlayer.UserId, options,
                 SendOptions.SendReliable);
@@ -41,10 +35,14 @@ namespace CodeBase.PlayerData
 
         public void Attack(Player player)
         {
-            _enemies.Add(player);
             RaiseEventOptions options = new RaiseEventOptions { TargetActors = new[] { player.ActorNumber } };
             PhotonNetwork.RaiseEvent(AttackEventCode, PhotonNetwork.LocalPlayer.UserId, options,
                 SendOptions.SendReliable);
+        }
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+
         }
 
         public void OnEvent(EventData photonEvent)
@@ -60,11 +58,6 @@ namespace CodeBase.PlayerData
                 var sender = PhotonNetwork.CurrentRoom.GetPlayer(photonEvent.Sender);
                 _popupSystem.ShowPopup("Attack event", $"{sender.NickName} attack you");
             }
-        }
-
-        public void Dispose()
-        {
-            PhotonNetwork.RemoveCallbackTarget(this);
         }
     }
 }

@@ -1,4 +1,4 @@
-using CodeBase.PlayerData;
+using CodeBase.PlayerLogic;
 using CodeBase.Services;
 using CodeBase.UI;
 using CodeBase.UnitsSystem.StaticData;

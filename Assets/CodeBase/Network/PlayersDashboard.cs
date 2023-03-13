@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using CodeBase.PlayerData;
-using CodeBase.StaticData;
+using CodeBase.PlayerLogic;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -22,6 +21,7 @@ namespace CodeBase.Network
             playersDashboardView.Initialize();
         }
 
+        
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
             if (changedProps.ContainsKey(Constants.AttackKey) || changedProps.ContainsKey(Constants.DefenseKey)) 

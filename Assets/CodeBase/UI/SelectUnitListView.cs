@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using CodeBase.PlayerData;
-using CodeBase.StaticData;
+using CodeBase.PlayerLogic;
 using CodeBase.UnitsSystem.StaticData;
 using UnityEngine;
 using Zenject;

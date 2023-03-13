@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Photon.Realtime;
 
-namespace CodeBase.PlayerData
+namespace CodeBase.PlayerLogic
 {
     public interface IPlayerBase
     {
@@ -11,5 +11,6 @@ namespace CodeBase.PlayerData
         
         void MakeAlliance(Player player);
         void Attack(Player player);
+        void SetPlayerMono(PlayerMono player);
     }
 }

@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputService: {fileID: 1169241542760626994, guid: 4508dad10b8894644b833bb7673fd8a3, type: 3}
+  _payerBasePrefab: {fileID: 4921701944601911211, guid: ac0cb66068b783a4b940c1acd1b20c85, type: 3}
 --- !u!1 &933772796
 GameObject:
   m_ObjectHideFlags: 0

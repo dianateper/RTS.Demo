@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CodeBase.PlayerData;
+using CodeBase.PlayerLogic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;

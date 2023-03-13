@@ -1,4 +1,4 @@
-﻿using CodeBase.StaticData;
+﻿using CodeBase.PlayerLogic;
 using UnityEngine;
 using Zenject;
 

@@ -1,4 +1,4 @@
-﻿using CodeBase.PlayerData;
+﻿using CodeBase.PlayerLogic;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;

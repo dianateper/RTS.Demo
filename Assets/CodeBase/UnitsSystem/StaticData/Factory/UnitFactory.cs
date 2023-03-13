@@ -1,6 +1,5 @@
-using CodeBase.PlayerData;
+using CodeBase.PlayerLogic;
 using CodeBase.Services;
-using CodeBase.StaticData;
 using CodeBase.UnitsSystem.UnitLogic;
 using UnityEngine;
 using Zenject;

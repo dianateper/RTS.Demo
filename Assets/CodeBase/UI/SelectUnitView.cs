@@ -1,6 +1,5 @@
 using System;
-using CodeBase.PlayerData;
-using CodeBase.StaticData;
+using CodeBase.PlayerLogic;
 using CodeBase.UnitsSystem.StaticData;
 using TMPro;
 using UnityEngine;
