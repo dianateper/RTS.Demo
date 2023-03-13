@@ -1,5 +1,4 @@
 using CodeBase.PlayerData;
-using CodeBase.StaticData;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
@@ -16,7 +15,7 @@ namespace CodeBase.UI
         [SerializeField] private Image _defense;
       
         private IPlayerStats _playerStats;
-
+       
         [Inject]
         public void Construct(IPlayerStats playerStats)
         {
@@ -37,10 +36,10 @@ namespace CodeBase.UI
         private void UpdateResource()
         {
             _gold.text = $"{_playerStats.Gold}";
-            _attack.fillAmount = _playerStats.AttackPercent;
-            _defense.fillAmount = _playerStats.DefensePercent;
+            Utils.AnimateImageFill(_attack, _playerStats.AttackPercent);
+            Utils.AnimateImageFill(_defense, _playerStats.DefensePercent);
         }
-
+        
         private void UpdateStats()
         {
             _gold.text = $"{_playerStats.Gold}";
