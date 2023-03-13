@@ -7,5 +7,6 @@ namespace CodeBase.UnitsSystem.StaticData
     public class ResourceUnit : Unit
     {
         [SerializeField] private List<ResourceType> _resources;
+        public List<ResourceType> Resources => _resources;
     }
 }

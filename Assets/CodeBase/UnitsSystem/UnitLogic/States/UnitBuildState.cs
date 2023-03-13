@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace CodeBase.UnitsSystem.UnitLogic.States
@@ -7,9 +8,9 @@ namespace CodeBase.UnitsSystem.UnitLogic.States
     {
         private readonly ProgressRenderer _progressRenderer;
         private readonly BaseWorldUnit _context;
-        private readonly float _productionRate;
         private float _time;
         private float _progress;
+        private WaitForSeconds _delay;
 
         public event Action OnUnitBuild;
         
@@ -18,30 +19,29 @@ namespace CodeBase.UnitsSystem.UnitLogic.States
         public UnitBuildState(BaseWorldUnit context)
         {
             _context = context;
-            _progressRenderer = _context.ProgressRate;
-            _productionRate = _context.Unit.ProductionRate;
+            _progressRenderer = _context.ProgressRender;
+            _delay = new WaitForSeconds(_context.Unit.ProductionRate);
         }
 
         public void Enter()
         {
-            _time = 0;
-            _progress = 0;
+            _context.StartCoroutine(Build());
             _progressRenderer.gameObject.SetActive(true);
+            _progressRenderer.AnimateProgress(0, _context.Unit.ProductionRate);
         }
 
         public void Update()
         {
-            _progress = _time * 100f / _productionRate;
-            if (_progress >= 100)
-            {
-                OnUnitBuild?.Invoke();
-                _context.ChangeState(UnitState.Idle);
-            }
-
-            _progressRenderer.UpdateProgress(_progress / 100f);
-            _time += Time.deltaTime;
+            
         }
 
+        private IEnumerator Build()
+        {
+            yield return _delay;
+            OnUnitBuild?.Invoke();
+            _context.ChangeState(UnitState.Idle);
+        }
+        
         public void Exit()
         {
             _progressRenderer.gameObject.SetActive(false);

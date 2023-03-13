@@ -20,27 +20,26 @@ namespace CodeBase.UI
         public void Construct(IPlayerStats playerStats)
         {
             _playerStats = playerStats;
-            _playerStats.OnUnitStatsChanged += UpdateStats;
-            _playerStats.OnResourceChanged += UpdateResource;
+            _playerStats.OnGoldChanged += UpdateGoldInfo;
+            _playerStats.OnUnitsChanged += UpdateUnitsInfo;
             _nickname.text = PhotonNetwork.LocalPlayer.NickName;
-            UpdateResource();
-            UpdateStats();
+            UpdateUnitsInfo();
+            UpdateGoldInfo();
         }
 
         private void OnDestroy()
         {
-            _playerStats.OnUnitStatsChanged -= UpdateStats;
-            _playerStats.OnResourceChanged -= UpdateResource;
+            _playerStats.OnGoldChanged -= UpdateGoldInfo;
+            _playerStats.OnUnitsChanged -= UpdateUnitsInfo;
         }
 
-        private void UpdateResource()
+        private void UpdateUnitsInfo()
         {
-            _gold.text = $"{_playerStats.Gold}";
             Utils.AnimateImageFill(_attack, _playerStats.AttackPercent);
             Utils.AnimateImageFill(_defense, _playerStats.DefensePercent);
         }
         
-        private void UpdateStats()
+        private void UpdateGoldInfo()
         {
             _gold.text = $"{_playerStats.Gold}";
         }

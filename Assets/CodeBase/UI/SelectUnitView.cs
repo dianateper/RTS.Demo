@@ -29,13 +29,13 @@ namespace CodeBase.UI
          _playerStats = playerStats;
          _selectButton.onClick.AddListener(SelectType);
          _selectButton.interactable = _playerStats.Gold >= _unit.Cost;
-         _playerStats.OnUnitStatsChanged += UpdateButtonsInteractive;
+         _playerStats.OnGoldChanged += UpdateButtonsInteractive;
          return this;
       }
 
       private void OnDestroy()
       {
-         _playerStats.OnUnitStatsChanged -= UpdateButtonsInteractive;
+         _playerStats.OnGoldChanged -= UpdateButtonsInteractive;
       }
 
       private void UpdateButtonsInteractive() => _selectButton.interactable = _playerStats.Gold >= _unit.Cost;

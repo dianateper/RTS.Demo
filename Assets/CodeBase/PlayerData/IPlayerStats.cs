@@ -12,8 +12,8 @@ namespace CodeBase.PlayerData
         int Defense { get; }
         float DefensePercent { get; }
         Dictionary<UnitType, int> UnitsCount { get; }
-        event Action OnUnitStatsChanged;
-        event Action OnResourceChanged;
+        event Action OnGoldChanged;
+        event Action OnUnitsChanged;
         void AddUnit(Unit unit);
         void AddResource(Unit unit);
     }

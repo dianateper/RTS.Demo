@@ -13,23 +13,24 @@ namespace CodeBase.UnitsSystem.UnitLogic
     {
         [SerializeField] private UnitRenderer _unitOutlieRenderer;
         [SerializeField] private TMP_Text _stateText;
-        [SerializeField] private ProgressRenderer _progressRenderer;
+        [SerializeField] protected ProgressRenderer _progressRenderer;
         private IUnitState _currentUnitState;
         private IInputService _inputService;
         private UnitSettings _unitSettings;
-        private IPlayerStats _playerStats;
-        private Unit _unit;
+        protected IPlayerStats _playerStats;
         private UnitStateFactory _unitStateFactory;
         private PlaceUnitState _placeUnitState;
         private UnitBuildState _unitBuildUnitState;
-        
+        protected Unit _unit;
+
         public UnitRenderer UnitRenderer => _unitOutlieRenderer;
         public IInputService InputService => _inputService;
         public UnitSettings UnitSettings => _unitSettings;
         public Unit Unit => _unit;
-        public ProgressRenderer ProgressRate => _progressRenderer;
+        public ProgressRenderer ProgressRender => _progressRenderer;
+        
         public event Action OnUnitPlace;
-
+        
         public void Construct(Unit unit, UnitSettings unitSettings, IInputService inputService,IPlayerStats playerStats)
         {
             _unitSettings = unitSettings;
@@ -78,7 +79,7 @@ namespace CodeBase.UnitsSystem.UnitLogic
             _currentUnitState = state;
             _stateText.text = $"{stateId}";
         }
-
+        
         private void CreateAndEnterUnitIdleState()
         {
             _currentUnitState = _unitStateFactory.GetUnitState(UnitState.Idle);

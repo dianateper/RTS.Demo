@@ -17,7 +17,6 @@
 
         public void Update()
         {
-            
         }
 
         public void Exit()

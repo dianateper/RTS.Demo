@@ -11,5 +11,10 @@ namespace CodeBase
         {
             DOTween.To(() => image.fillAmount, x => image.fillAmount = x, endValue, ImageFillSlideDuration);
         }
+        
+        public static void AnimateImageFill(Image image, float startValue, float endValue, float duration = ImageFillSlideDuration)
+        {
+            DOTween.To(() => startValue, x => image.fillAmount = x, endValue, duration);
+        }
     }
 }

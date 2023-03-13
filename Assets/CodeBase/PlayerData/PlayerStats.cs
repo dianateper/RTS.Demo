@@ -21,7 +21,17 @@ namespace CodeBase.PlayerData
         private readonly int _maxDefense;
         private readonly Hashtable _props;
 
-        public int Gold => _gold;
+        public int Gold
+        {
+            get => _gold;
+
+            set
+            {
+                OnGoldChanged?.Invoke();
+                _gold = value;
+            }
+        }
+
         public float AttackPercent => (float)_attack / _maxAttack;
         public int Attack
         {
@@ -38,28 +48,40 @@ namespace CodeBase.PlayerData
         public float DefensePercent => (float)_defense / _maxDefense;
 
         public Dictionary<UnitType, int> UnitsCount => _unitsCount;
-        public event Action OnResourceChanged;
-        public event Action OnUnitStatsChanged;
+        public event Action OnUnitsChanged;
+        public event Action OnGoldChanged;
         
         [Inject]
         public PlayerStats(PlayerSettings playerSettings)
         {
-            _gold = playerSettings.StartGold;
+            Gold = playerSettings.StartGold;
             _maxAttack = playerSettings.MaxAttack;
             _maxDefense = playerSettings.MaxDefense;
             _unitsCount = new Dictionary<UnitType, int>();
             _props = new Hashtable();
-            UpdatePlayerData();
+            UpdatePlayerCustomProperties();
         }
 
         public void AddUnit(Unit unit)
         {
-            _gold -= unit.Cost;
+            Gold -= unit.Cost;
             if (_unitsCount.ContainsKey(unit.UnitType))
                 _unitsCount[unit.UnitType]++;
             else
                 _unitsCount.Add(unit.UnitType, 1);
-            OnUnitStatsChanged?.Invoke();
+            
+            switch (unit.UnitType)
+            {
+                case UnitType.Defense:
+                    _defense = Mathf.Clamp(unit.Impact + _defense, 0, _maxDefense);
+                    break;
+                case UnitType.Attack:
+                    _attack = Mathf.Clamp(unit.Impact + _attack, 0, _maxAttack);
+                    break;
+            }
+            
+            OnUnitsChanged?.Invoke();
+            UpdatePlayerCustomProperties();
         }
 
         public void AddResource(Unit unit)
@@ -67,23 +89,12 @@ namespace CodeBase.PlayerData
             switch (unit.UnitType)
             {
                 case UnitType.Resource:
-                    _gold += unit.Impact;
+                    Gold += unit.Impact;
                     break;
-                case UnitType.Defense:
-                    _defense = Mathf.Clamp(unit.Impact + _defense, 0, _maxDefense);
-                    break;
-                case UnitType.Attack:
-                    _attack = Mathf.Clamp(unit.Impact + _attack, 0, _maxAttack);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
-            
-            UpdatePlayerData();
-            OnResourceChanged?.Invoke();
         }
 
-        private void UpdatePlayerData()
+        private void UpdatePlayerCustomProperties()
         {
             _props[Constants.AttackKey] = Attack;
             _props[Constants.DefenseKey] = Defense;

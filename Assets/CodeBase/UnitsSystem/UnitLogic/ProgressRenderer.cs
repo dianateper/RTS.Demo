@@ -7,9 +7,9 @@ namespace CodeBase.UnitsSystem.UnitLogic
     {
         [SerializeField] private Image _image;
         
-        public void UpdateProgress(float progress)
+        public void AnimateProgress(int startValue, float duration)
         {
-            _image.fillAmount = progress;
+           Utils.AnimateImageFill(_image, startValue, 1, duration);
         }
     }
 }
