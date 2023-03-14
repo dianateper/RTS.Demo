@@ -9,12 +9,15 @@ namespace CodeBase.PlayerLogic
     public class PlayerFactory : ScriptableObject
     {
         [SerializeField] private PlayerNetwork _playerNetworkPrefab;
+        [SerializeField] private Vector3 _cameraOffset;
         private IPlayerBase _playerBase;
+        private Camera _mainCamera;
         
         [Inject]
-        public void Construct(IPlayerBase playerBase)
+        public void Construct(IPlayerBase playerBase, Camera mainCamera)
         {
             _playerBase = playerBase;
+            _mainCamera = mainCamera;
         }
 
         public PlayerNetwork CreatePlayer(Vector3[] spawnPoints)
@@ -22,7 +25,9 @@ namespace CodeBase.PlayerLogic
             var player = PhotonNetwork
                 .Instantiate(_playerNetworkPrefab.name, Vector3.zero, Quaternion.identity, 0).GetComponent<PlayerNetwork>();
             _playerBase.SetPlayerNetwork(player);
-            player.transform.position = GetRandomPosition(spawnPoints);;
+            var position =  GetRandomPosition(spawnPoints);
+            player.transform.position = position;
+            _mainCamera.transform.position = position + _cameraOffset;
             return player;
         }
 

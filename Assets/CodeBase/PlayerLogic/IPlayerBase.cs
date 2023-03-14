@@ -10,6 +10,7 @@ namespace CodeBase.PlayerLogic
         
         List<Player> Enemies { get; }
         IPlayerStats PlayerStats { get; }
+        Vector3 Position { get; }
 
         void MakeAlliance(Player player);
         void Attack(Player player);

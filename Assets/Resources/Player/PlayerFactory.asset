@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: PlayerFactory
   m_EditorClassIdentifier: 
   _playerNetworkPrefab: {fileID: 5055375688694330598, guid: ac0cb66068b783a4b940c1acd1b20c85, type: 3}
+  _cameraOffset: {x: 0, y: 15, z: -45}

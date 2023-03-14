@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ModestTree;
 using UnityEngine;
 
 namespace CodeBase.UI
@@ -37,10 +38,11 @@ namespace CodeBase.UI
 
         private void HidePopup()
         {
+            if (_popupQueue.IsEmpty()) return;
+            
             _popupQueue.Dequeue();
             _popup.SetCanvasAlpha(0);
-            if (_popupQueue.Count > 0) 
-                ShowNextPopup();
+            ShowNextPopup();
         }
     }
 }

@@ -1,9 +1,9 @@
+using CodeBase.PlayerLogic;
 using CodeBase.Services;
 using CodeBase.UI;
 using CodeBase.UnitsSystem.StaticData;
 using CodeBase.UnitsSystem.StaticData.Factory;
 using CodeBase.UnitsSystem.UnitLogic;
-using Photon.Pun;
 using UnityEngine;
 using Zenject;
 
@@ -15,13 +15,15 @@ namespace CodeBase.UnitsSystem
         private UnitViews _unitView;
         private BaseWorldUnit _selectedBaseWorldUnit;
         private IInputService _inputService;
+        private IPlayerBase _playerBase;
         
         [Inject]
-        public void Construct(IInputService inputService, UnitViews unitViews, IUnitFactory unitFactory)
+        public void Construct(IInputService inputService, UnitViews unitViews, IUnitFactory unitFactory, IPlayerBase playerBase)
         {
             _unitView = unitViews;
             _inputService = inputService;
             _unitFactory = unitFactory;
+            _playerBase = playerBase;
         }
         
         private void OnEnable()
@@ -40,8 +42,8 @@ namespace CodeBase.UnitsSystem
         {
             if (_selectedBaseWorldUnit != null) 
                 DestroySelectedUnit();
-          
-            _selectedBaseWorldUnit = _unitFactory.CreateUnit(unit.UnitId);
+
+            _selectedBaseWorldUnit = _unitFactory.CreateUnit(_playerBase.Position, unit.UnitId);
             _selectedBaseWorldUnit.OnUnitPlace += ResetUnit;
             _selectedBaseWorldUnit.Select();
         }

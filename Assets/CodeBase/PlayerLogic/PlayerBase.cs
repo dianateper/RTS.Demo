@@ -21,6 +21,7 @@ namespace CodeBase.PlayerLogic
         public List<Player> Alliance => _alliance;
         public List<Player> Enemies => _enemies;
         public IPlayerStats PlayerStats => _playerNetwork.PlayerStats;
+        public Vector3 Position => _playerNetwork.transform.position;
 
         [Inject]
         public PlayerBase(PopupSystem popupSystem,  PlayerSettings playerSettings)

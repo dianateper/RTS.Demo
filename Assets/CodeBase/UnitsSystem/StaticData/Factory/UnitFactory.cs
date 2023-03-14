@@ -26,10 +26,10 @@ namespace CodeBase.UnitsSystem.StaticData.Factory
             _targetCamera = mainCamera.transform;
         }
         
-        public BaseWorldUnit CreateUnit(string unitId)
+        public BaseWorldUnit CreateUnit(Vector3 at, string unitId)
         {
             Unit unitData = _unitsData.GetUnit(unitId);
-            BaseWorldUnit unit = PhotonNetwork.Instantiate(unitData.UnitPrefab.name, Vector3.zero, Quaternion.identity).GetComponent<BaseWorldUnit>();
+            BaseWorldUnit unit = PhotonNetwork.Instantiate(unitData.UnitPrefab.name, at, Quaternion.identity).GetComponent<BaseWorldUnit>();
             var unitView = unit.GetComponent<PhotonView>();
             if (unitView.IsMine)
                 unit.GetComponentInChildren<Canvas>()?.gameObject.AddComponent<RotateTowardsCamera>()
