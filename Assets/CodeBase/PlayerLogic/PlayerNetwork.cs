@@ -20,8 +20,9 @@ namespace CodeBase.PlayerLogic
         public PhotonView PhotonView => _photonView;
         public IPlayerStats PlayerStats => _playerStats;
 
-        public void Construct(PopupSystem popupSystem)
+        public void Construct(PopupSystem popupSystem, PlayerSettings playerSettings)
         {
+            _playerStats.Construct(playerSettings);
             _popupSystem = popupSystem;
             PhotonNetwork.AddCallbackTarget(this);
         }

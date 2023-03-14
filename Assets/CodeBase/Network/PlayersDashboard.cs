@@ -18,6 +18,11 @@ namespace CodeBase.Network
             _playersDashboardView = playersDashboardView;
         }
 
+        private void Start()
+        {
+            UpdateDashboard();
+        }
+
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
             if (changedProps.ContainsKey(Constants.AttackKey) || changedProps.ContainsKey(Constants.DefenseKey)) 
@@ -32,6 +37,8 @@ namespace CodeBase.Network
                 _playerDataDict[newPlayer] = newPlayer.TagObject as PlayerNetwork;
                 _playersDashboardView.AddPlayer(newPlayer);
             }
+
+            UpdateDashboard();
         }
 
         public override void OnPlayerLeftRoom(Player otherPlayer)

@@ -101,17 +101,7 @@ namespace CodeBase.PlayerLogic
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            if (stream.IsWriting)
-            {
-                stream.SendNext(Attack);
-                stream.SendNext(Defense);
-            }
             
-            if (stream.IsReading)
-            {
-                Attack = (int)stream.ReceiveNext();
-                Defense = (int)stream.ReceiveNext();
-            }
         }
     }
 }

@@ -16,21 +16,23 @@ namespace CodeBase.PlayerLogic
         private IPlayerStats _playerStats;
         private PopupSystem _popupSystem;
         private PlayerNetwork _playerNetwork;
-        
+        private readonly PlayerSettings _playerSettings;
+
         public List<Player> Alliance => _alliance;
         public List<Player> Enemies => _enemies;
         public IPlayerStats PlayerStats => _playerNetwork.PlayerStats;
 
         [Inject]
-        public PlayerBase(PopupSystem popupSystem)
+        public PlayerBase(PopupSystem popupSystem,  PlayerSettings playerSettings)
         {
             _popupSystem = popupSystem;
+            _playerSettings = playerSettings;
         }
 
         public void SetPlayerNetwork(PlayerNetwork playerNetwork)
         {
             _playerNetwork = playerNetwork; 
-            _playerNetwork.Construct(_popupSystem);
+            _playerNetwork.Construct(_popupSystem, _playerSettings);
         }
         
         public void MakeAlliance(Player player)

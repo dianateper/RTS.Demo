@@ -70,6 +70,10 @@ namespace CodeBase.Network
                 _players[player].SetAttack(attack);
                 _players[player].SetDefense(defense);   
             }
+            else
+            {
+                AddPlayer(player);
+            }
         }
     }
 }
