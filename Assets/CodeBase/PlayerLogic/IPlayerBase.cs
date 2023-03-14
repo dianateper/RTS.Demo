@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Photon.Realtime;
+using UnityEngine;
 
 namespace CodeBase.PlayerLogic
 {

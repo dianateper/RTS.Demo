@@ -1,5 +1,6 @@
 using CodeBase.PlayerLogic;
 using CodeBase.Services;
+using CodeBase.StaticData;
 using CodeBase.UnitsSystem.StaticData;
 using CodeBase.UnitsSystem.StaticData.Factory;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace CodeBase.Installers
             Container.Bind<PlayerFactory>().FromScriptableObjectResource(Constants.PlayerFactoryPath).AsSingle().NonLazy();
             Container.Bind<IUnitFactory>().To<UnitFactory>().FromScriptableObjectResource(Constants.UnitFactoryPath).AsSingle().NonLazy();
             Container.Bind<UnitsData>().FromScriptableObjectResource(Constants.UnitsDataPath).AsSingle().NonLazy();
+            Container.Bind<LevelStaticData>().FromScriptableObjectResource(Constants.LevelStaticData).AsSingle().NonLazy();
         }
     }
 }
