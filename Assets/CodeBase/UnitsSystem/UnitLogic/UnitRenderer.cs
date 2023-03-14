@@ -13,14 +13,10 @@ namespace CodeBase.UnitsSystem.UnitLogic
         public void Construct(UnitSettings settings)
         {
             _unitSettings = settings;
-        }
-        
-        private void Awake()
-        {
             _propertyBlock = new MaterialPropertyBlock();
             EnableRenderer();
         }
-
+        
         public void EnableRenderer() => _renderer.enabled = true;
 
         public void DisableRenderer() => _renderer.enabled = false;

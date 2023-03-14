@@ -1,5 +1,4 @@
 using UnityEngine;
-using Zenject;
 
 namespace CodeBase.Common
 {
@@ -7,14 +6,14 @@ namespace CodeBase.Common
     {
         private Transform _target;
 
-        [Inject]
-        public void Construct(Camera mainCamera)
+        public void SetTarget(Transform target)
         {
-            _target = mainCamera.transform;
+            _target = target;
         }
-
+        
         private void LateUpdate()
         {
+            if (_target == null) return;
             transform.LookAt(transform.position + _target.rotation * Vector3.forward,
                 _target.rotation * Vector3.up);
         }

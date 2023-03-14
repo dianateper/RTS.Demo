@@ -1,6 +1,8 @@
+using CodeBase.Common;
 using CodeBase.PlayerLogic;
 using CodeBase.Services;
 using CodeBase.UnitsSystem.UnitLogic;
+using Photon.Pun;
 using UnityEngine;
 using Zenject;
 
@@ -14,20 +16,24 @@ namespace CodeBase.UnitsSystem.StaticData.Factory
 
         private IInputService _inputService;
         private IPlayerBase _playerBase;
-        private DiContainer _diContainer;
-        
+        private Transform _targetCamera;
+
         [Inject]
-        public void Construct(IInputService inputService, IPlayerBase playerBase, DiContainer diContainer)
+        public void Construct(IInputService inputService, IPlayerBase playerBase, Camera mainCamera)
         {
             _inputService = inputService;
             _playerBase = playerBase;
-            _diContainer = diContainer;
+            _targetCamera = mainCamera.transform;
         }
         
         public BaseWorldUnit CreateUnit(string unitId)
         {
             Unit unitData = _unitsData.GetUnit(unitId);
-            BaseWorldUnit unit = _diContainer.InstantiatePrefab(unitData.UnitPrefab).GetComponent<BaseWorldUnit>();
+            BaseWorldUnit unit = PhotonNetwork.Instantiate(unitData.UnitPrefab.name, Vector3.zero, Quaternion.identity).GetComponent<BaseWorldUnit>();
+            var unitView = unit.GetComponent<PhotonView>();
+            if (unitView.IsMine)
+                unit.GetComponentInChildren<Canvas>()?.gameObject.AddComponent<RotateTowardsCamera>()
+                    .SetTarget(_targetCamera);
             unit.Construct(unitData, _unitSettings, _inputService, _playerBase);
             return unit;
         }

@@ -12,7 +12,7 @@ namespace CodeBase.UI
         
         private void Awake()
         {
-            _unitViews = FindObjectsOfType<SelectUnitListView>();
+            _unitViews = GetComponentsInChildren<SelectUnitListView>();
         }
 
         private void OnEnable()
