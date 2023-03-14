@@ -13,14 +13,14 @@ namespace CodeBase.UnitsSystem.StaticData.Factory
         [SerializeField] private UnitSettings _unitSettings;
 
         private IInputService _inputService;
-        private IPlayerStats _playerStats;
+        private IPlayerBase _playerBase;
         private DiContainer _diContainer;
         
         [Inject]
-        public void Construct(IInputService inputService, IPlayerStats playerStats, DiContainer diContainer)
+        public void Construct(IInputService inputService, IPlayerBase playerBase, DiContainer diContainer)
         {
             _inputService = inputService;
-            _playerStats = playerStats;
+            _playerBase = playerBase;
             _diContainer = diContainer;
         }
         
@@ -28,7 +28,7 @@ namespace CodeBase.UnitsSystem.StaticData.Factory
         {
             Unit unitData = _unitsData.GetUnit(unitId);
             BaseWorldUnit unit = _diContainer.InstantiatePrefab(unitData.UnitPrefab).GetComponent<BaseWorldUnit>();
-            unit.Construct(unitData, _unitSettings, _inputService, _playerStats);
+            unit.Construct(unitData, _unitSettings, _inputService, _playerBase);
             return unit;
         }
     }

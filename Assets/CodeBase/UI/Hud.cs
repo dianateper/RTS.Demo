@@ -1,3 +1,4 @@
+using System;
 using CodeBase.PlayerLogic;
 using Photon.Pun;
 using TMPro;
@@ -14,20 +15,26 @@ namespace CodeBase.UI
         [SerializeField] private Image _attack;
         [SerializeField] private Image _defense;
       
+        private IPlayerBase _playerBase;
         private IPlayerStats _playerStats;
        
         [Inject]
-        public void Construct(IPlayerStats playerStats)
+        public void Construct(IPlayerBase playerBase)
         {
-            _playerStats = playerStats;
+            _playerBase = playerBase;
+            _nickname.text = PhotonNetwork.LocalPlayer.NickName;
+        }
+
+        private void OnEnable()
+        {
+            _playerStats = _playerBase.PlayerStats;
             _playerStats.OnGoldChanged += UpdateGoldInfo;
             _playerStats.OnUnitsChanged += UpdateUnitsInfo;
-            _nickname.text = PhotonNetwork.LocalPlayer.NickName;
             UpdateUnitsInfo();
             UpdateGoldInfo();
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             _playerStats.OnGoldChanged -= UpdateGoldInfo;
             _playerStats.OnUnitsChanged -= UpdateUnitsInfo;

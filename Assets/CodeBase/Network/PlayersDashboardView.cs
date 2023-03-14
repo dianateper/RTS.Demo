@@ -21,7 +21,7 @@ namespace CodeBase.Network
             _playerBase = playerBase;
         }
 
-        public void Initialize()
+        private void Start()
         {
             LoadPlayers();
         }

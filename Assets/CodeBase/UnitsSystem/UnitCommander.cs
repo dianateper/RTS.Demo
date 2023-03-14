@@ -1,4 +1,5 @@
-﻿using CodeBase.Services;
+﻿using System;
+using CodeBase.Services;
 using CodeBase.UnitsSystem.UnitLogic;
 using UnityEngine;
 using Zenject;
@@ -18,11 +19,14 @@ namespace CodeBase.UnitsSystem
         {
             _inputService = inputService;
             _mainCamera = mainCamera;
+        }
 
+        private void OnEnable()
+        {
             _inputService.OnUnitSelect += SelectUnit;
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             _inputService.OnUnitSelect -= SelectUnit;
         }

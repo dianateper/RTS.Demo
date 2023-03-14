@@ -9,19 +9,15 @@ namespace CodeBase.Network
 {
     public class PlayersDashboard : MonoBehaviourPunCallbacks
     {
-        private readonly Dictionary<Player, IPlayerStats> _playerDataDict = new();
+        private readonly Dictionary<Player, PlayerNetwork> _playerDataDict = new();
         private PlayersDashboardView _playersDashboardView;
-        private PlayerSettings _playerSettings;
-
+      
         [Inject]
-        public void Construct(PlayerSettings playerSettings, PlayersDashboardView playersDashboardView)
+        public void Construct(PlayersDashboardView playersDashboardView)
         {
-            _playerSettings = playerSettings;
             _playersDashboardView = playersDashboardView;
-            playersDashboardView.Initialize();
         }
 
-        
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
             if (changedProps.ContainsKey(Constants.AttackKey) || changedProps.ContainsKey(Constants.DefenseKey)) 
@@ -30,9 +26,12 @@ namespace CodeBase.Network
 
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
-            IPlayerStats playerData = new PlayerStats(_playerSettings);
-            _playerDataDict[newPlayer] = playerData;
-            _playersDashboardView.AddPlayer(newPlayer);
+            var player = newPlayer.TagObject as PlayerNetwork;
+            if (player != null)
+            {
+                _playerDataDict[newPlayer] = newPlayer.TagObject as PlayerNetwork;
+                _playersDashboardView.AddPlayer(newPlayer);
+            }
         }
 
         public override void OnPlayerLeftRoom(Player otherPlayer)

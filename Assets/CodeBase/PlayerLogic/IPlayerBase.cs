@@ -8,9 +8,10 @@ namespace CodeBase.PlayerLogic
         List<Player> Alliance { get; }
         
         List<Player> Enemies { get; }
-        
+        IPlayerStats PlayerStats { get; }
+
         void MakeAlliance(Player player);
         void Attack(Player player);
-        void SetPlayerMono(PlayerMono player);
+        void SetPlayerNetwork(PlayerNetwork player);
     }
 }

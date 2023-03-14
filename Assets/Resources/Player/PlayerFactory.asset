@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973fa94c0d78420f8124b58fd169fb3c, type: 3}
   m_Name: PlayerFactory
   m_EditorClassIdentifier: 
-  _playerBasePrefab: {fileID: 5055375688694330598, guid: ac0cb66068b783a4b940c1acd1b20c85, type: 3}
+  _playerNetworkPrefab: {fileID: 5055375688694330598, guid: ac0cb66068b783a4b940c1acd1b20c85, type: 3}

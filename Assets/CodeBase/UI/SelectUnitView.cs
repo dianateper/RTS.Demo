@@ -15,29 +15,29 @@ namespace CodeBase.UI
       [SerializeField] private Image _image;
 
       private Unit _unit;
-      private IPlayerStats _playerStats;
+      private IPlayerBase _playerBase;
 
       public event Action<Unit> OnUnitSelect;
       
-      public SelectUnitView Construct(Unit unit, IPlayerStats playerStats)
+      public SelectUnitView Construct(Unit unit, IPlayerBase playerBase)
       {
          _unitName.text = unit.Name;
          _unitCost.text = unit.Cost.ToString();
          _image.sprite = unit.Sprite;
          _unit = unit;
-         _playerStats = playerStats;
+         _playerBase = playerBase;
+         _playerBase.PlayerStats.OnGoldChanged += UpdateButtonsInteractive;
          _selectButton.onClick.AddListener(SelectType);
-         _selectButton.interactable = _playerStats.Gold >= _unit.Cost;
-         _playerStats.OnGoldChanged += UpdateButtonsInteractive;
+         _selectButton.interactable = _playerBase.PlayerStats.Gold >= _unit.Cost;
          return this;
       }
 
       private void OnDestroy()
       {
-         _playerStats.OnGoldChanged -= UpdateButtonsInteractive;
+         _playerBase.PlayerStats.OnGoldChanged -= UpdateButtonsInteractive;
       }
 
-      private void UpdateButtonsInteractive() => _selectButton.interactable = _playerStats.Gold >= _unit.Cost;
+      private void UpdateButtonsInteractive() => _selectButton.interactable = _playerBase.PlayerStats.Gold >= _unit.Cost;
 
       private void SelectType() => OnUnitSelect?.Invoke(_unit);
    }

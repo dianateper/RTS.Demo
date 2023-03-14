@@ -1,4 +1,3 @@
-using CodeBase.PlayerLogic;
 using CodeBase.Services;
 using CodeBase.UI;
 using CodeBase.UnitsSystem.StaticData;
@@ -17,7 +16,7 @@ namespace CodeBase.UnitsSystem
         private IInputService _inputService;
         
         [Inject]
-        public void Construct(IInputService inputService, UnitViews unitViews, IUnitFactory unitFactory, IPlayerStats playerStats, Camera mainCamera)
+        public void Construct(IInputService inputService, UnitViews unitViews, IUnitFactory unitFactory)
         {
             _unitView = unitViews;
             _inputService = inputService;

@@ -16,11 +16,11 @@ namespace CodeBase.UnitsSystem.UnitLogic
         private IUnitState _currentUnitState;
         private IInputService _inputService;
         private UnitSettings _unitSettings;
-        protected IPlayerStats _playerStats;
         private UnitStateFactory _unitStateFactory;
         private PlaceUnitState _placeUnitState;
         private UnitBuildState _unitBuildUnitState;
         protected Unit _unit;
+        protected IPlayerBase _playerBase;
 
         public UnitRenderer UnitRenderer => _unitOutlieRenderer;
         public IInputService InputService => _inputService;
@@ -30,11 +30,11 @@ namespace CodeBase.UnitsSystem.UnitLogic
         
         public event Action OnUnitPlace;
         
-        public void Construct(Unit unit, UnitSettings unitSettings, IInputService inputService,IPlayerStats playerStats)
+        public void Construct(Unit unit, UnitSettings unitSettings, IInputService inputService, IPlayerBase playerBase)
         {
             _unitSettings = unitSettings;
             _inputService = inputService;
-            _playerStats = playerStats;
+            _playerBase = playerBase;
             _unit = unit;
             _unitOutlieRenderer.Construct(_unitSettings);
             _unitStateFactory = new UnitStateFactory(this);
@@ -98,12 +98,12 @@ namespace CodeBase.UnitsSystem.UnitLogic
 
         private void OnUnitUnitBuild()
         {
-            _playerStats.AddResource(_unit);
+            _playerBase.PlayerStats.AddResource(_unit);
         }
 
         private void OnPlaceUnit()
         {
-            _playerStats.AddUnit(_unit);
+            _playerBase.PlayerStats.AddUnit(_unit);
             _placeUnitState.OnUnitPlaced -= OnPlaceUnit;
             OnUnitPlace?.Invoke();
         }

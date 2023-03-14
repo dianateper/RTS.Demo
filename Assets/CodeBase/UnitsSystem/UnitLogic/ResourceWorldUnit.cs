@@ -20,7 +20,7 @@ namespace CodeBase.UnitsSystem.UnitLogic
             _progressRenderer.AnimateProgress(0, _unit.ProductionRate);
             yield return _delay;
             ChangeState(UnitState.Idle);
-            _playerStats?.AddResource(_unit);
+            _playerBase.PlayerStats?.AddResource(_unit);
             _progressRenderer.gameObject.SetActive(false);
         }
     }

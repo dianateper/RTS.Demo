@@ -8,14 +8,14 @@ namespace CodeBase.Network
     public class NetworkLevelHandler : MonoBehaviourPunCallbacks
     {
         private PlayerFactory _playerFactory;
-
+       
         [Inject]
         public void Construct(PlayerFactory playerFactory)
         {
             _playerFactory = playerFactory;
         }
         
-        private void Start()
+        private void Awake()
         {
             if (PhotonNetwork.IsConnected == false)
             {

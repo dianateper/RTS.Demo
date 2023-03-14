@@ -15,14 +15,14 @@ namespace CodeBase.UI
         
         private UnitsData _unitsData;
         private List<SelectUnitView> _unitsView;
-        private IPlayerStats _playerStats;
+        private IPlayerBase _playerBase;
         
         public event Action<Unit> OnUnitSelect;
 
         [Inject]
-        public void Construct(IPlayerStats playerStats, UnitsData unitsData)
+        public void Construct(IPlayerBase playerBase, UnitsData unitsData)
         {
-            _playerStats = playerStats;
+            _playerBase = playerBase;
             _unitsData = unitsData;
         }
         
@@ -43,7 +43,7 @@ namespace CodeBase.UI
                 var unitView = Instantiate(_selectUnitView, _parent);
                 unitView.OnUnitSelect += SelectUnit;
                 unitView.gameObject.SetActive(true);
-                _unitsView.Add(unitView.Construct(unit, _playerStats));
+                _unitsView.Add(unitView.Construct(unit, _playerBase));
             }
         }
 

@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 4921701944601911210}
   - component: {fileID: 4921701944601911213}
   - component: {fileID: 5055375688694330598}
+  - component: {fileID: 7855386112136700512}
   m_Layer: 0
-  m_Name: PlayerMono
+  m_Name: PlayerNetwork
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,6 +54,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5055375688694330598}
+  - {fileID: 7855386112136700512}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -69,3 +71,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _photonView: {fileID: 4921701944601911213}
+  _playerStats: {fileID: 7855386112136700512}
+--- !u!114 &7855386112136700512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4921701944601911212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e04702876c2c429eb55f62ec597d1696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

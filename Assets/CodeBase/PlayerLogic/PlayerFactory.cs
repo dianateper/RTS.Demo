@@ -7,7 +7,7 @@ namespace CodeBase.PlayerLogic
     [CreateAssetMenu(menuName = "RTS/Create Player Factory", fileName = "PlayerFactory")]
     public class PlayerFactory : ScriptableObject
     {
-        [SerializeField] private PlayerMono _playerBasePrefab;
+        [SerializeField] private PlayerNetwork _playerNetworkPrefab;
         private IPlayerBase _playerBase;
         
         [Inject]
@@ -16,11 +16,11 @@ namespace CodeBase.PlayerLogic
             _playerBase = playerBase;
         }
 
-        public PlayerMono CreatePlayer()
+        public PlayerNetwork CreatePlayer()
         {
-            var player =  PhotonNetwork
-                .Instantiate(_playerBasePrefab.name, Vector3.zero, Quaternion.identity, 0).GetComponent<PlayerMono>();
-            _playerBase.SetPlayerMono(player);
+            var player = PhotonNetwork
+                .Instantiate(_playerNetworkPrefab.name, Vector3.zero, Quaternion.identity, 0).GetComponent<PlayerNetwork>();
+            _playerBase.SetPlayerNetwork(player);
             return player;
         }
     }

@@ -7,13 +7,18 @@ using UnityEngine;
 namespace CodeBase.PlayerLogic
 {
     [RequireComponent(typeof(PhotonView))]
-    public class PlayerMono : MonoBehaviour, IPunObservable, IOnEventCallback
+    [RequireComponent(typeof(PlayerStats))]
+    public class PlayerNetwork : MonoBehaviourPunCallbacks, IOnEventCallback, IPunObservable
     {
         [SerializeField] private PhotonView _photonView;
+        [SerializeField] private PlayerStats _playerStats;
         private PopupSystem _popupSystem;
-        
+      
         private const byte MakeAllianceEventCode = 1;
         private const byte AttackEventCode = 2;
+        
+        public PhotonView PhotonView => _photonView;
+        public IPlayerStats PlayerStats => _playerStats;
 
         public void Construct(PopupSystem popupSystem)
         {
@@ -40,13 +45,9 @@ namespace CodeBase.PlayerLogic
                 SendOptions.SendReliable);
         }
 
-        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-        {
-
-        }
-
         public void OnEvent(EventData photonEvent)
         {
+            if(_photonView.IsMine == false) return;
             byte eventCode = photonEvent.Code;
             if (eventCode == MakeAllianceEventCode)
             {
@@ -58,6 +59,11 @@ namespace CodeBase.PlayerLogic
                 var sender = PhotonNetwork.CurrentRoom.GetPlayer(photonEvent.Sender);
                 _popupSystem.ShowPopup("Attack event", $"{sender.NickName} attack you");
             }
+        }
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            
         }
     }
 }

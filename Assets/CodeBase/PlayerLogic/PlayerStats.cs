@@ -8,17 +8,16 @@ using Zenject;
 
 namespace CodeBase.PlayerLogic
 {
-    [Serializable]
-    public class PlayerStats : IPlayerStats
+    public class PlayerStats : MonoBehaviour, IPlayerStats, IPunObservable
     {
         private int _gold;
         private int _attack;
         private int _defense;
         
         private Dictionary<UnitType, int> _unitsCount;
-        private readonly int _maxAttack;
-        private readonly int _maxDefense;
-        private readonly Hashtable _props;
+        private int _maxAttack;
+        private int _maxDefense;
+        private Hashtable _props;
 
         public int Gold
         {
@@ -51,7 +50,7 @@ namespace CodeBase.PlayerLogic
         public event Action OnGoldChanged;
         
         [Inject]
-        public PlayerStats(PlayerSettings playerSettings)
+        public void Construct(PlayerSettings playerSettings)
         {
             Gold = playerSettings.StartGold;
             _maxAttack = playerSettings.MaxAttack;
@@ -98,6 +97,21 @@ namespace CodeBase.PlayerLogic
             _props[Constants.AttackKey] = Attack;
             _props[Constants.DefenseKey] = Defense;
             PhotonNetwork.LocalPlayer.SetCustomProperties(_props);
+        }
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                stream.SendNext(Attack);
+                stream.SendNext(Defense);
+            }
+            
+            if (stream.IsReading)
+            {
+                Attack = (int)stream.ReceiveNext();
+                Defense = (int)stream.ReceiveNext();
+            }
         }
     }
 }
